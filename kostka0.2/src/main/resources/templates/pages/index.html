@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hrací kostka</title>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styly.css">
+    <script>
+        async function posliKostkaDTO(pocetSten) {
+    const data = { pocetSten: pocetSten }; // Vytvoření JSON objektu
+
+    const response = await fetch('/kostka', {
+        method: 'POST', // Používáme POST pro odeslání dat
+        headers: {
+            'Content-Type': 'application/json', // Nastavení typu obsahu
+        },
+        body: JSON.stringify(data), // Převod dat do JSON formátu
+    });
+
+    if (response.ok) {
+        const kostkaDTO = await response.json(); // Získání kompletního DTO z odpovědi
+        document.getElementById("vystup").textContent = `${kostkaDTO.vysledek}`; // Zobrazení výsledku
+    } else {
+        console.error('Chyba při odesílání dat:', response.status);
+    }
+}
+
+// Připojení funkcionality na tlačítka
+window.onload = function() {
+    document.getElementById("sest").addEventListener("click", () => posliKostkaDTO(6));
+    document.getElementById("dvacet").addEventListener("click", () => posliKostkaDTO(20));
+};
+    </script>
+</head>
+<body class="container pozadi">
+<h1 th:text="${kostkaDTO.pocetSten}"></h1>
+
+<div class="container-fluid pozadi py-5">
+    <div class="container-fluid py-3 rounded jumboPozadi">
+        <div class="row">
+            <h1 class="text-center">Hrací kostka</h1>
+        </div>
+        <div class="row">
+            <p class = "lead">Vyber si kostku</p>
+        </div>
+        <div class="row">
+            <div class="col-auto d-flex flex-column">
+                <button type = "button" class="btn btn-secondary px-3 tlacitka mb-2" id="sest">Šestistěnná</button>
+                <button type="button" class="btn btn-secondary px-3 tlacitka" id="dvacet">Dvacetistěnná</button>
+            </div>
+            <!--
+            <div class="col-auto ms-auto">
+                <div class="h1 display-3 pe-5" id="vystup">
+                    0
+                </div>
+            </div>
+            -->
+
+        </div>
+
+        <div class="row my-5"></div>
+        <div class="row my-5">
+            <div class="col text-center">
+                <div class="h1 display-1 py-5" id="vystup" th:text="${vystup}">
+                    0
+                </div>
+            </div>
+        </div>
+        <div class="row my-5"></div>
+        <div class="row my-5"></div>
+        <div class="row my-5"></div>
+        <div class="row my-5"></div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+</body>
+</html>

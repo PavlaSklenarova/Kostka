@@ -1,0 +1,19 @@
+.pozadi 
+{
+    background-color: #8fc6f3;
+}
+.tlacitka
+{
+    background-color:blue ;
+    color: white;
+    width: 200px;
+}
+.tlacitka:hover
+{
+    background-color: white;
+    color: blue;
+}
+.jumboPozadi
+{
+    background-color:#eeedd1;
+}
